@@ -1,16 +1,9 @@
 const { bdd }= require('../../database');
 
-
 const getMovies = async (req, res ) => {
     await bdd
     .query("SELECT * FROM movies")
-    .then(([movies]) => {
-        if(movies[0] != null ){
-            res.json(movies[0]);
-        }else{
-            res.status(404).send('Not Found');
-        } 
-    })
+    .then(([movies]) => res.json(movies))
     .catch((err) => res.status(500).send("Error retrieving data from database"))
 }
 
