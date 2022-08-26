@@ -36,8 +36,39 @@ const postUsers = async (req, res) => {
     });
 }
 
+    const updateUsers = async (req, res) => {
+        const { firstname , lastname , email ,city ,language} = req.body;
+        await bdd
+        .query ("INSERT INTO users (firstname, lastname, email, city, language) VALUE (?, ?, ?, ?, ?,)",
+        [firstname, lastname, email, city, language]
+        )
+        .then(([results]) => {
+            res.location(`/users/${results.insertId}`).status(201);
+        })
+        .catch((err) => {
+            res.status(500).send("error saving");
+        })
+    }
+    const updateUsersId = async (req, res) =>{
+        const id = parseInt(req.params.id)
+        await bdd
+        .query(`UPDATE FROM users WHERE id = ${id}`)
+        .then(([users]) =>{
+            if(users[0] != null){
+                res.json(users[0])
+            }else{
+                res.status(404).send("Not Found");
+            }
+        })
+        .catch((err) =>res.status(500).send("pas de users"))
+    }
+
+
 module.exports = {
     getUsers,
     getUsersId,
-    postUsers
+    postUsers,
+    updateUsers,
+    updateUsersId
+
 }
