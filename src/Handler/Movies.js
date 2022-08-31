@@ -1,5 +1,8 @@
 const { bdd }= require('../../database');
 
+
+
+
 const getMovies = async (req, res ) => {
     await bdd
     .query("SELECT * FROM movies")
@@ -56,10 +59,13 @@ const updateMoviesId = async (resq,res) => {
   })
   .catch((err) => res.status(500).send("pas de movies"))
 }
+
+
+
 module.exports = {
     getMovies,
     getMoviesId,
     updateMovies,
     updateMoviesId,
-  
+    
 }
