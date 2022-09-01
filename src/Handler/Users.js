@@ -78,6 +78,22 @@ const postUsers = async (req, res) => {
                 next();
                }
     }*/
+    const deleteUsers =  async (req, res) => {
+        const id = parseInt(req.params.id);
+        await bdd
+        .query("delete from users where id = ?", [id])
+        .then(([result]) => {
+            if (result.affectedRows === 0) {
+                res.status(404).send("Not Found");
+            }else {
+                res.sendStatus(204);
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error deleting the users");
+        });
+    };
 
 
 module.exports = {
@@ -86,5 +102,6 @@ module.exports = {
     postUsers,
     updateUsers,
     updateUsersId,
+    deleteUsers,
     
 }

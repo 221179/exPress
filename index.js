@@ -21,6 +21,7 @@ const {
   updateUsers,
   updateUsersId,
   getUsers,
+  deleteUsers
   
   
   
@@ -39,12 +40,16 @@ app.put("/movies", updateMovies);
 app.put("/movies/:id", updateMoviesId, validateMovies);
 
 
+
 //Users
 app.get("/users", getUsers);
 app.get("/users/:id", getUsersId);
 app.post("/users", postUsers, validateUsers);
 app.put("/users", updateUsers);
 app.put("/users/:id", updateUsersId, validateUsers);
+app.delete("/users/:id",deleteUsers )
+
+
 
 
 app.listen(Port, () =>

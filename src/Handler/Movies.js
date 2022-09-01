@@ -61,11 +61,11 @@ const updateMoviesId = async (resq,res) => {
 }
 
 
-
 module.exports = {
     getMovies,
     getMoviesId,
     updateMovies,
     updateMoviesId,
+    
     
 }
