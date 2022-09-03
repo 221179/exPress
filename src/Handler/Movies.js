@@ -4,11 +4,31 @@ const { bdd }= require('../../database');
 
 
 const getMovies = async (req, res ) => {
-    await bdd
-    .query("SELECT * FROM movies")
-    .then(([movies]) => res.json(movies))
-    .catch((err) => res.status(500).send("Error retrieving data from database"))
+  let sql = "select* from movies";
+  const sqlValues = [];
+
+  if (req.query.color != null){
+  sql += "where color = ?";
+  sqlValues.push(req.query.color);
+
+if (req.query.max_duration != null) {
+  sql += "where duration <= ?";
+  sqlValues.push(req.query.max_duration);
 }
+} else if (req.query.max_duration != null) {
+  sql += "where duration <= ?";
+  sqlValues.push(req.query.max_duration);
+}
+    await bdd
+    .query(sql,sqlValues)
+    .then(([movies]) => {
+      res.json(movies);
+    })
+    .catch((err) => {console.error(err);
+    res.status(500).send("Error retrieving data from database");
+  });
+};
+
 
 const getMoviesId = async (req, res) => {
     const id = parseInt(req.params.id)
